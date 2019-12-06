@@ -50,18 +50,6 @@ shuffleWordArray(words)
 // print words again!
 console.log(words)
 
-// get first 25 words from shuffled array
-// console.log(`first 25 words:\n[${words.slice(0,25)}]\n`)
-// get first 25 words from shuffled array
-/*
-	var boardWords = wordArray.slice(0,25)
-	// print 'em
-	console.log(`\nfirst 25 words:\n`)
-	for (let i = 0; i < 5; i++) {
-		console.log(boardWords.slice(i*5,(i*5)+5))
-	}
-*/
-
 // create 2D word array
 var boardArray = new Array(5)
 for (var i = 0; i < boardArray.length; i++) {
