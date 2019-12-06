@@ -39,6 +39,10 @@ var sliceWordArray = (arr, n) => {
 	return arr
 }
 
+const hideThing = (thing) => {
+	thing.setAttribute('hide','true')
+}
+
 const start = () => {
 
 	// get word string
@@ -133,9 +137,11 @@ const start = () => {
 		// this works: document.getElementById(modeToSet).innerHTML = 'spy'
 	}
 	changeMode('spymaster')
+
+	hideThing(document.getElementById('start'))
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	start()
-	// document.getElementById('start').addEventListener('click', start)
+	// start()
+	document.getElementById('start').addEventListener('click', start)
 })

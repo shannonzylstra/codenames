@@ -19,6 +19,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 } 
 */
 
+[hide='true'] {
+	display: none;
+}
+
 h1 {
 	font-size: 100%;
 	padding: 10px 0;
@@ -26,6 +30,7 @@ h1 {
     font-family: SkyFall Done;
 	vertical-align: baseline;
 }
+
 .container, #board, table, td {
 	text-align: center;
 }
