@@ -1,4 +1,5 @@
 const boardSize = 25
+var winState = false
 let team, spyColors, spyWords
 
 var getWordString = () => {
@@ -59,12 +60,8 @@ const start = () => {
 	var wordString = getWordString().toLowerCase()
 	// make wordString into array
 	var words = wordString.split(',')
-	// print words!
-	console.log(words)
 	// shuffle words
 	shuffleWordArray(words)
-	// print words again!
-	console.log(words)
 
 	// create 2D word array
 	var boardArray = new Array(5)
@@ -92,7 +89,6 @@ const start = () => {
 		let j = 5*i
 		colorArray[i] = colors.slice(j,j+5) // add row to array
 	}
-	// console.log(colorArray) // print to console
 	spyColors = colorArray
 
 	// add colors to boardArray 
@@ -104,12 +100,11 @@ const start = () => {
 			console.log(`(${i},${j}): [${boardArray[i][j]}, ${colorArray[i][j]}]`)
 		}
 	}
-	// console.log(coloredBoardArray)
 	spyWords = coloredBoardArray
 
 	// make innerHTML
 	var makeTableHtmlString = () => {
-		let tableHtmlString = `\n<div id="board" class="gridContainer">\n` // instead of <table id="boardTable">
+		let tableHtmlString = `\n<table>` // instead of <table id="boardTable">
 		let i = 0
 		boardArray.forEach(row => {
 			tableHtmlString += `\n<tr class=">\n`
@@ -134,12 +129,43 @@ const start = () => {
 	console.log(tableHtmlString)
 	document.getElementById("board").innerHTML = tableHtmlString
 
+	// now I need to add the listeners!
+	const addCardListeners = () => {
+		
+		// Grab all red card <td> elements from DOM
+		let cardItems = []
+		cardItems['red'] = document.querySelectorAll('td.red')
+		cardItems['blue'] = document.querySelectorAll('td.blue')
+		cardItems['white'] = document.querySelectorAll('td.neutral')
+		cardItems['assassin'] = document.querySelectorAll('td.assassin')
+
+		// what to do when a card is clicked 
+		const clickCard = (e, color) => {
+			// change to the covered card class
+			e.target.setAttribute('cover', color)
+			// remove listener
+			e.target.removeEventListener('click', clickCard(color))
+
+		}
+		// loop over cards 
+		function addColoredEventListeners(color) {
+			for (let i = 0; i < cardItems[color].length; i++) {
+				// add event listener for clicks on each card 
+				cardItems[color][i].addEventListener('click', clickCard(color)) 
+			}
+		}
+		addColoredEventListeners('red')
+	}
+	
+
+	addCardListeners()
+
 	function chooseMode(mode) {
 		return mode
 	}
 	console.log(chooseMode("player"))
 
-	var changeMode = (modeToSet) => {
+	var changeMode = (e, modeToSet) => {
 		let modeElement = document.getElementsByClassName("mode")
 		console.log(modeElement)
 		let modeID = modeElement[0].id
@@ -159,9 +185,53 @@ const start = () => {
 	// function to set turn: #board += [turn=team]
 	setTurn(team)
 
+	document.getElementsByClassName('td').setAttribute('bg','default') // set default backgrounds
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById('start')
 		.addEventListener('click', start)
 })
+
+function addSquareListeners(){
+  var squareCells = document.querySelectorAll('td');
+  console.log(squareCells)
+  
+  for(var i = 0; i < squareCells.length; i++){
+    // squareCells[i].src = './img/uncut-' + squareCells[i].id + '-wire.png';
+    // This decides whether wire should be cut or not
+    // wireImages[i].setAttribute('data-cut', (Math.random() > 0.5).toString());
+    // console.log(wireImages[i]);
+
+    squareCells[i].addEventListener('click', clickSquare(squareCells[i]));
+  }
+
+  if(checkCard()){
+	  score[1]+=1
+  }
+  if(checkWin()){
+	  alert("You outspied the other team! Woo!")
+  }
+  /*
+  // If all false, that's not a real game, reset!
+  if(checkWin()){
+    start();
+  }
+  */
+}
+
+var checkCard = () => {
+	return true
+}
+
+var checkWin = () => {
+	return winState
+}
+
+var clickCard = (square) => {
+	square.setAttribute('cover', 'red')
+}
+
+// import wordListObject from './srv/js/modules/wordList.js';
+// console.log(wordListObjet);

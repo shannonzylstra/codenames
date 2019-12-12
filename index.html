@@ -7,14 +7,50 @@
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-	  <div class="container" id="game">
+	<div class="container">
+		<header>
 			<h1>CODENAMES</h1>
-			<div id="board"></div>
-			<button class="mode" id="player" hide="true">player</button>
-	  </div>
-	  <div class="container">
+		</header> 
+		<main id="boardgame">
+			<section id="gameInfo"></section>
+			<section id="gameBoard">
+				<div class="container" id="game">
+					<div class="gridContainer" id="board"></div>
+				</div>
+			</section>
+			<section id="gameControls">
+				<div class="wrapper" id="controlsWrapper">
+					<div class="control" id="settings"></div>
+					<div class="control" id="mode">
+						<div class="btn" id="mode-btn-player">
+							<button class="mode" id="player" hide="true">player</button>
+						</div>
+						<div class="btn" id="mode-btn-spymaster">
+							<button class="mode" id="spymaster" hide="true">spymaster</button>
+						</div>
+					</div>
+					<div class="control" id="restart">
+						<div class="btn" id="restart-btn">
+							<button id="restartButton"></button>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+	</div>
+	<div class="container">
 		  <button id="start">Play!</button>
-	  </div>
+	</div>
     <script src="script.js"></script>
+	<!-- <script src="srv/js/modules/word-module.js"></script> -->
+	<script type="module">
+	  import {wordListArray} from './words.mjs';
+	  console.log(wordListArray);
+	</script>
+	<script type="module">
+		import { wordListObject } from './srv/js/modules/wordList.mjs';
+		console.log(`wordListObject:\n`, wordListObject, `\n`);
+	</script>
   </body>
 </html>

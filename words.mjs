@@ -1,0 +1,1 @@
+export var wordListArray = [ 'AFRICA', 'AGENT', 'YARD' ];
